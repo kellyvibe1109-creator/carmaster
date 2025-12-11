@@ -406,6 +406,63 @@
     .manager-btn.primary:hover {
       background: #3b82f6;
     }
+
+    .submit-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .submit-modal.active {
+      display: flex;
+    }
+    .submit-content {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 380px;
+      width: 90%;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .submit-icon {
+      font-size: 60px;
+      margin-bottom: 16px;
+    }
+    .submit-content h2 {
+      font-size: 24px;
+      color: #111827;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .submit-content p {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .submit-btn {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+
     .business-card-modal {
       display: none;
       position: fixed;
@@ -768,22 +825,26 @@
         payload[key] = value;
       });
 
-      try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbw2vJV74GmA7Q_5J10AUWa61SlDgAORz6rspNjqjWyR91ie1k6yp6pA-ew8RRnLbH7ZUQ/exec', {
-  method: 'POST',
-  mode: 'no-cors',  // preflight 피하기
-  // no custom headers
-  body: JSON.stringify(payload)
-});
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
+      console.log('📤 전송 데이터:', payload);
 
-        // no-cors 모드에서는 상태코드를 확인할 수 없으므로, 일단 성공으로 처리
+      try {
+        console.log('🚀 fetch 시작...');
+        // Apps Script는 CORS 응답 헤더를 설정하기 어렵기 때문에 no-cors로 전송하고 낙관적으로 처리
+        const response = await fetch('https://script.google.com/macros/s/AKfycbw2vJV74GmA7Q_5J10AUWa61SlDgAORz6rspNjqjWyR91ie1k6yp6pA-ew8RRnLbH7ZUQ/exec', {
+          method: 'POST',
+          mode: 'no-cors',
+          // no custom headers → preflight 회피
+          body: JSON.stringify(payload)
+        });
+        console.log('✅ fetch 완료:', response);
+
+        // no-cors 모드에서는 상태/본문을 읽을 수 없으므로 성공으로 간주
         statusEl.textContent = '신청이 정상적으로 접수되었습니다. 확인 후 연락드리겠습니다.';
         statusEl.classList.add('status--success');
         form.reset();
+        
+        // 팝업 모달 띄우기
+        showSubmitModal();
       } catch (err) {
         console.error(err);
         statusEl.textContent = '전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
@@ -792,6 +853,17 @@
         submitBtn.disabled = false;
       }
     });
+
+    // 상담 신청 완료 팝업
+    function showSubmitModal() {
+      const modal = document.getElementById('submitModal');
+      modal.classList.add('active');
+    }
+
+    function closeSubmitModal() {
+      const modal = document.getElementById('submitModal');
+      modal.classList.remove('active');
+    }
 
     // 명함발송 함수
     function sendBusinessCard() {
@@ -889,6 +961,16 @@
     });
   </script>
 
+  <!-- 상담 신청 완료 모달 -->
+  <div id="submitModal" class="submit-modal">
+    <div class="submit-content">
+      <div class="submit-icon">✅</div>
+      <h2>신청이 완료되었습니다.</h2>
+      <p>소중한 상담 신청을 받았습니다.<br />담당자가 확인 후 빠르게 연락드리겠습니다.</p>
+      <button class="submit-btn" onclick="closeSubmitModal()">닫기</button>
+    </div>
+  </div>
+
   <!-- 명함발송 모달 -->
   <div id="businessCardModal" class="business-card-modal">
     <div class="business-card-content">
@@ -926,5 +1008,3 @@
   </div>
 </body>
 </html>
-
-
