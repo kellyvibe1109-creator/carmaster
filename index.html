@@ -769,10 +769,12 @@
       });
 
       try {
-        const res = await fetch('https://https://script.google.com/macros/s/AKfycbzUZ_EmZU3L13pPbkYmAnq_lD1rEimuZS37sEUjmW_TjGln1zG5nmwDGvBGLUmIZypR/exec', {
-          method: 'POST',
-          mode: 'no-cors', // Apps Script 웹앱 기본 응답 대응
-          body: JSON.stringify(payload),
+        const res = await fetch('https://script.google.com/macros/s/AKfycbw2vJV74GmA7Q_5J10AUWa61SlDgAORz6rspNjqjWyR91ie1k6yp6pA-ew8RRnLbH7ZUQ/exec', {
+  method: 'POST',
+  mode: 'no-cors',  // preflight 피하기
+  // no custom headers
+  body: JSON.stringify(payload)
+});
           headers: {
             'Content-Type': 'application/json'
           }
@@ -924,4 +926,5 @@
   </div>
 </body>
 </html>
+
 
