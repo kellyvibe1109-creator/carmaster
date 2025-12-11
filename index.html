@@ -1,0 +1,926 @@
+<!-- 파일명 예시: index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>르노 1:1 맞춤 상담 신청 | 김포 대리점</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", system-ui, sans-serif;
+      background: #f4f6fb;
+      color: #222;
+      line-height: 1.6;
+    }
+    .wrapper {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+    header {
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: #fff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 24px;
+    }
+    header .badge {
+      display: inline-block;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    header .highlight {
+      color: #60a5fa;
+      font-weight: 600;
+    }
+    .hero-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+      font-size: 13px;
+    }
+    .hero-box {
+      flex: 1 1 220px;
+      background: rgba(15,23,42,0.7);
+      border-radius: 12px;
+      padding: 12px 12px 8px;
+    }
+    .hero-box strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+    .hero-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .hero-box li::before {
+      content: "· ";
+      color: #60a5fa;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px 18px;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.08);
+      border: 1px solid #e5e7eb;
+    }
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .card p.desc {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+    .step-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #111827;
+      color: #fff;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-body strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    form {
+      margin-top: 8px;
+    }
+    .field {
+      margin-bottom: 10px;
+    }
+    .field label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .field label span.req {
+      color: #ef4444;
+      margin-left: 4px;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      background: #f9fafb;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px rgba(37,99,235,0.25);
+      background: #ffffff;
+    }
+    .field textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    .field-inline {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    @media (max-width: 600px) {
+      .field-inline {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .policy-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f3f4f6;
+      font-size: 11px;
+      color: #4b5563;
+    }
+    .policy-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .policy-list {
+      padding-left: 16px;
+      margin-bottom: 4px;
+    }
+    .policy-list li {
+      list-style: disc;
+    }
+    .policy-check {
+      margin-top: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 12px;
+    }
+    .policy-check input {
+      margin-top: 2px;
+    }
+
+    .submit-wrap {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+    button[type="submit"] {
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 8px 20px rgba(37,99,235,0.35);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, opacity 0.15s;
+    }
+    button[type="submit"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(37,99,235,0.4);
+      opacity: 0.98;
+    }
+    button[type="submit"]:disabled {
+      opacity: 0.65;
+      box-shadow: none;
+      cursor: default;
+      transform: none;
+    }
+    .submit-note {
+      font-size: 11px;
+      color: #6b7280;
+    }
+    .status {
+      font-size: 12px;
+      margin-top: 4px;
+      min-height: 18px;
+    }
+    .status--success {
+      color: #16a34a;
+    }
+    .status--error {
+      color: #dc2626;
+    }
+
+    .profile {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    .profile-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: #111827;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .profile-text small {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .reviews-section {
+      margin-top: 40px;
+    }
+    .reviews-section h2 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      color: #111827;
+      text-align: center;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .review-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 4px solid #f59e0b;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.08);
+      border: 1px solid #e5e7eb;
+    }
+    .review-card p {
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .review-date {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .reviews-section.in-card {
+      margin-top: 32px;
+    }
+    .reviews-section.in-card h2 {
+      text-align: left;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .reviews-section.in-card .reviews-grid {
+      gap: 12px;
+    }
+    .reviews-section.in-card .review-card {
+      border-left-color: #f59e0b;
+      box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+      padding: 14px;
+    }
+    .reviews-section.in-card .review-card p {
+      font-size: 13px;
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+    .reviews-section.in-card .review-date {
+      font-size: 11px;
+      margin-top: 8px;
+      padding-top: 8px;
+    }
+
+    .manager-header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.08);
+      padding: 12px 14px;
+      border-radius: 12px;
+    }
+    .manager-avatar {
+      width: 80px;
+      height: 100px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #fff;
+    }
+    .manager-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .manager-info {
+      flex: 1;
+    }
+    .manager-info h2 {
+      font-size: 16px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .manager-info p {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    .manager-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .manager-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .manager-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .manager-btn.primary {
+      background: #60a5fa;
+    }
+    .manager-btn.primary:hover {
+      background: #3b82f6;
+    }
+    .business-card-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .business-card-modal.active {
+      display: flex;
+    }
+    .business-card-content {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    }
+    .business-card-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #6b7280;
+    }
+    .business-card-close:hover {
+      color: #111827;
+    }
+    .business-card-content h3 {
+      margin-bottom: 16px;
+      color: #111827;
+      font-size: 18px;
+    }
+    .business-card-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .business-card-form label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+    }
+    .business-card-form input {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .business-card-form input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px rgba(37,99,235,0.25);
+    }
+    .business-card-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .business-card-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: opacity 0.2s ease;
+    }
+    .business-card-btn.send {
+      background: #2563eb;
+      color: #fff;
+    }
+    .business-card-btn.send:hover {
+      opacity: 0.9;
+    }
+    .business-card-btn.cancel {
+      background: #e5e7eb;
+      color: #374151;
+    }
+    .business-card-btn.cancel:hover {
+      opacity: 0.8;
+    }
+    .location-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .location-modal.active {
+      display: flex;
+    }
+    .location-content {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+    .location-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .location-content h3 {
+      margin-bottom: 12px;
+      color: #111827;
+    }
+    .location-content p {
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #6b7280;
+    }
+    .location-map {
+      width: 100%;
+      height: 300px;
+      border-radius: 8px;
+      margin-top: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 11px;
+      color: #9ca3af;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="manager-header">
+        <div class="manager-avatar">
+          <img src="./조현욱_프로필.png" alt="조현욱 담당자" />
+        </div>
+        <div class="manager-info">
+          <h2>조현욱</h2>
+          <p>르노코리아 김포 대리점 영업 담당</p>
+          <div class="manager-actions">
+            <a href="tel:010-6648-4949" class="manager-btn primary">📞 010-6648-4949</a>
+            <button class="manager-btn" onclick="sendBusinessCard()">🎫 명함발송</button>
+            <button class="manager-btn" onclick="showLocation()">📍 위치안내</button>
+          </div>
+        </div>
+      </div>
+      <div class="badge">르노코리아 공식 영업사원 1:1 상담</div>
+      <h1>르노 1:1 맞춤 상담 신청</h1>
+      <p>
+        콜레오스 · 아르카나 · 아스카파드 · 오로라2 등<br />
+        <span class="highlight">김포 대리점 전담 매니저</span>가
+        실시간 견적과 프로모션, 재고 현황까지 한 번에 신속하고 정확하게 안내해 드립니다.
+      </p>
+      <div class="hero-bottom">
+        <div class="hero-box">
+          <strong>이 페이지에서 신청하면</strong>
+          <ul>
+            <li>지역/주행패턴에 맞춘 맞춤 견적 제공</li>
+            <li>현재 가능한 할인/프로모션 바로 안내</li>
+            <li>전화·내방 예약 중 원하는 방식 상담</li>
+          </ul>
+        </div>
+        <div class="hero-box">
+          <strong>상담 진행 방식</strong>
+          <ul>
+            <li>신청서 작성 → 담당자가 확인 후 연락</li>
+            <li>대략적인 예산·관심 차종만 적어도 OK</li>
+            <li>상담만 받아보고 결정하셔도 괜찮습니다</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- 왼쪽: 상담 절차/안내 -->
+      <section class="card">
+        <h2>이렇게 진행됩니다</h2>
+        <p class="desc">복잡한 설명 대신, 3단계로 깔끔하게 정리했습니다.</p>
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>신청서 작성 (1분)</strong>
+              <span>연락받으실 번호와 대략의 예산, 관심 차종만 적어주세요.</span>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>담당자가 연락</strong>
+              <span>고객님이 선택하신 방식으로 (전화/카톡) 1:1 상담을 도와드립니다.</span>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>견적·시승·출고까지</strong>
+              <span>견적 비교 → 시승 예약 → 계약 및 출고까지 한 번에 책임지고 안내드립니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile">
+          <div class="profile-avatar">조</div>
+          <div class="profile-text">
+            <strong>르노코리아 김포 대리점 / 조현욱</strong><br />
+            <small>"상담부터 출고·사후관리까지, 끝까지 책임지고 도와드리겠습니다."</small>
+          </div>
+        </div>
+
+        <!-- 고객 후기: 좌측 카드 내부에 노출 -->
+        <section class="reviews-section in-card">
+          <h2>고객 후기</h2>
+          <div class="reviews-grid">
+            <div class="review-card">
+              <p>다른 곳보다 할인 조건을 훨씬 자세히 알려주셔서 신뢰가 갔습니다.</p>
+              <div class="review-date">25.11.28 박** 고객님</div>
+            </div>
+            <div class="review-card">
+              <p>견적 받고 바로 계약했어요. 실구매가가 정확하게 맞았습니다.</p>
+              <div class="review-date">25.11.15 김** 고객님</div>
+            </div>
+            <div class="review-card">
+              <p>전화 압박 없이 원하는 정보만 딱딱 받을 수 있어서 좋았습니다.</p>
+              <div class="review-date">25.11.05 최** 고객님</div>
+            </div>
+            <div class="review-card">
+              <p>출고 일정까지 정확하게 안내받아서 계획 세우기 편했어요.</p>
+              <div class="review-date">25.10.18 정** 고객님</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- 오른쪽: 상담 신청 폼 -->
+      <section class="card">
+        <h2>상담 신청하기</h2>
+        <p class="desc">아래 정보를 남겨주시면, 확인 후 최대한 빠르게 연락드리겠습니다.</p>
+
+        <form id="consult-form">
+          <div class="field">
+            <label>이름<span class="req">*</span></label>
+            <input type="text" name="name" placeholder="예: 홍길동" required />
+          </div>
+
+          <div class="field">
+            <label>연락처(휴대폰)<span class="req">*</span></label>
+            <input type="tel" name="phone" placeholder="예: 010-1234-5678" required />
+          </div>
+
+          <div class="field-inline">
+            <div class="field">
+              <label>거주 지역<span class="req">*</span></label>
+              <input type="text" name="region" placeholder="예: 김포 / 서울 강서 / 인천 등" required />
+            </div>
+            <div class="field">
+              <label>연령대</label>
+              <select name="age_range">
+                <option value="">선택 안 함</option>
+                <option value="20대">20대</option>
+                <option value="30대">30대</option>
+                <option value="40대">40대</option>
+                <option value="50대 이상">50대 이상</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>관심 차종<span class="req">*</span></label>
+            <select name="model" required>
+              <option value="">선택해주세요</option>
+              <option value="그랑콜레오스 E-TECH 하이브리드">그랑콜레오스 E-TECH 하이브리드</option>
+              <option value="그랑콜레오스 가솔린">그랑콜레오스 가솔린</option>
+              <option value="아르카나 E-TECH 하이브리드">아르카나 E-TECH 하이브리드</option>
+              <option value="아르카나 가솔린">아르카나 가솔린</option>
+              <option value="출시예정 오로라2">출시예정 오로라2</option>
+              <option value="여러 차종 비교 상담">여러 차종 비교 상담</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>상담 희망 방식</label>
+            <select name="contact_type">
+              <option value="">선택 안 함</option>
+              <option value="전화">전화</option>
+              <option value="매장 내방 상담">매장 내방 상담</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>추가하고 싶은 내용</label>
+            <textarea name="memo" placeholder="기존 보유 차량, 예산 범위, 관심 옵션 등 자유롭게 적어주세요."></textarea>
+          </div>
+
+          <div class="policy-box">
+            <div class="policy-title">개인정보 수집·이용 동의(필수)</div>
+            <ul class="policy-list">
+              <li>수집 항목: 이름, 연락처, 거주지역, 상담 내용</li>
+              <li>수집 목적: 르노 차량 상담 및 견적 안내를 위한 연락</li>
+              <li>보유 기간: 상담 완료 후 최대 1년 또는 고객 삭제 요청 시까지</li>
+            </ul>
+            <div class="policy-check">
+              <input type="checkbox" id="policy" name="policy" required />
+              <label for="policy">위 내용을 읽고, 개인정보 수집·이용에 동의합니다.<span class="req">*</span></label>
+            </div>
+          </div>
+
+          <div class="submit-wrap">
+            <button type="submit">
+              상담 신청하기
+              <span aria-hidden="true">→</span>
+            </button>
+            <div class="submit-note">* 상담 신청 후, 영업일 기준 가능하면 빠르게 연락을 드립니다.</div>
+            <div id="status" class="status"></div>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <footer>
+      르노코리아자동차 김포 대리점 · 이 페이지는 상담 신청 접수를 위한 랜딩 페이지입니다.
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('consult-form');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      statusEl.textContent = '';
+      statusEl.className = 'status';
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+
+      const formData = new FormData(form);
+      const payload = {};
+      formData.forEach((value, key) => {
+        payload[key] = value;
+      });
+
+      try {
+        const res = await fetch('YOUR_WEB_APP_URL_HERE', {
+          method: 'POST',
+          mode: 'no-cors', // Apps Script 웹앱 기본 응답 대응
+          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        // no-cors 모드에서는 상태코드를 확인할 수 없으므로, 일단 성공으로 처리
+        statusEl.textContent = '신청이 정상적으로 접수되었습니다. 확인 후 연락드리겠습니다.';
+        statusEl.classList.add('status--success');
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = '전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+        statusEl.classList.add('status--error');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    // 명함발송 함수
+    function sendBusinessCard() {
+      const modal = document.getElementById('businessCardModal');
+      const input = document.getElementById('recipientPhoneInput');
+      input.value = ''; // 입력 필드 초기화
+      modal.classList.add('active');
+      input.focus();
+    }
+
+    function closeBusinessCardModal() {
+      const modal = document.getElementById('businessCardModal');
+      modal.classList.remove('active');
+    }
+
+    function submitBusinessCard() {
+      const recipientPhone = document.getElementById('recipientPhoneInput').value.trim();
+
+      if (!recipientPhone) {
+        alert('수신자 휴대폰 번호를 입력해주세요.');
+        document.getElementById('recipientPhoneInput').focus();
+        return;
+      }
+
+      // 휴대폰 번호 형식 검증
+      const phoneRegex = /^01[0-9]-?\d{3,4}-?\d{4}$/;
+      if (!phoneRegex.test(recipientPhone)) {
+        alert('올바른 휴대폰 번호 형식이 아닙니다.\n예: 010-1234-5678');
+        document.getElementById('recipientPhoneInput').focus();
+        return;
+      }
+
+      const senderPhone = '010-6649-4848';
+      
+      // 발송 처리
+      alert(`명함이 발송되었습니다.\n\n발신자: ${senderPhone}\n수신자: ${recipientPhone}\n파일: 카마스터 명함.png`);
+      
+      closeBusinessCardModal();
+
+      // 실제 백엔드 API 호출 예시:
+      /*
+      fetch('/api/send-business-card', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          senderPhone: '010-6649-4848',
+          recipientPhone: recipientPhone,
+          imageFile: '카마스터 명함.png'
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert('명함이 발송되었습니다!');
+          closeBusinessCardModal();
+        } else {
+          alert('발송 중 오류가 발생했습니다.');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('발송 중 오류가 발생했습니다.');
+      });
+      */
+    }
+
+    // 엔터키로 발송 처리
+    document.addEventListener('DOMContentLoaded', function() {
+      const phoneInput = document.getElementById('recipientPhoneInput');
+      if (phoneInput) {
+        phoneInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            submitBusinessCard();
+          }
+        });
+      }
+    });
+
+    // 위치안내 함수
+    function showLocation() {
+      const modal = document.getElementById('locationModal');
+      modal.classList.add('active');
+    }
+
+    function closeLocation() {
+      const modal = document.getElementById('locationModal');
+      modal.classList.remove('active');
+    }
+
+    // 모달 외부 클릭 시 닫기
+    document.getElementById('locationModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeLocation();
+      }
+    });
+  </script>
+
+  <!-- 명함발송 모달 -->
+  <div id="businessCardModal" class="business-card-modal">
+    <div class="business-card-content">
+      <button class="business-card-close" onclick="closeBusinessCardModal()">&times;</button>
+      <h3>명함 발송</h3>
+      <div class="business-card-form">
+        <label for="recipientPhoneInput">수신자 휴대폰 번호</label>
+        <input 
+          type="tel" 
+          id="recipientPhoneInput" 
+          placeholder="예: 010-1234-5678" 
+          autocomplete="off"
+        />
+        <div class="business-card-buttons">
+          <button type="button" class="business-card-btn send" onclick="submitBusinessCard()">발송</button>
+          <button type="button" class="business-card-btn cancel" onclick="closeBusinessCardModal()">취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 위치안내 모달 -->
+  <div id="locationModal" class="location-modal">
+    <div class="location-content">
+      <button class="location-close" onclick="closeLocation()">&times;</button>
+      <h3>🏣 르노코리아 김포 대리점</h3>
+      <p><strong>주소:</strong> 경기도 김포시 (">
+      <a href="https://m.place.naver.com/place/37718010/home?entry=pll" target="_blank" style="color: #2563eb; text-decoration: underline;">네이버 지도에서 보기</a>
+      <p><strong>전화:</strong> 010-6648-4949</p>
+      <p><strong>운영시간:</strong> 평일 10:00 ~ 19:00 / 토요일 10:00 ~ 18:00</p>
+      <p><strong>휴무:</strong> 일요일</p>
+      <a href="https://m.place.naver.com/place/37718010/home?entry=pll" target="_blank" class="location-map" style="display: flex; align-items: center; justify-content: center; background: #f0f0f0; border-radius: 8px; border: 1px solid #e5e7eb;">네이버 지도로 이동 →</a>
+      <p style="font-size: 11px; margin-top: 12px; color: #9ca3af;">클릭하면 네이버 지도에서 더 자세한 정보를 확인할 수 있습니다.</p>
+    </div>
+  </div>
+</body>
+</html>
