@@ -807,6 +807,52 @@
     </footer>
   </div>
 
+  <!-- 상담 신청 완료 모달 -->
+  <div id="submitModal" class="submit-modal">
+    <div class="submit-content">
+      <div class="submit-icon">✅</div>
+      <h2>신청이 완료되었습니다.</h2>
+      <p>소중한 상담 신청을 받았습니다.<br />담당자가 확인 후 빠르게 연락드리겠습니다.</p>
+      <button class="submit-btn" onclick="closeSubmitModal()">닫기</button>
+    </div>
+  </div>
+
+  <!-- 명함발송 모달 -->
+  <div id="businessCardModal" class="business-card-modal">
+    <div class="business-card-content">
+      <button class="business-card-close" onclick="closeBusinessCardModal()">&times;</button>
+      <h3>명함 발송</h3>
+      <div class="business-card-form">
+        <label for="recipientPhoneInput">수신자 휴대폰 번호</label>
+        <input 
+          type="tel" 
+          id="recipientPhoneInput" 
+          placeholder="예: 010-1234-5678" 
+          autocomplete="off"
+        />
+        <div class="business-card-buttons">
+          <button type="button" class="business-card-btn send" onclick="submitBusinessCard()">발송</button>
+          <button type="button" class="business-card-btn cancel" onclick="closeBusinessCardModal()">취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 위치안내 모달 -->
+  <div id="locationModal" class="location-modal">
+    <div class="location-content">
+      <button class="location-close" onclick="closeLocation()">&times;</button>
+      <h3>🏣 르노코리아 김포 대리점</h3>
+      <p><strong>주소:</strong> 경기도 김포시 (">
+      <a href="https://m.place.naver.com/place/37718010/home?entry=pll" target="_blank" style="color: #2563eb; text-decoration: underline;">네이버 지도에서 보기</a>
+      <p><strong>전화:</strong> 010-6648-4949</p>
+      <p><strong>운영시간:</strong> 평일 10:00 ~ 19:00 / 토요일 10:00 ~ 18:00</p>
+      <p><strong>휴무:</strong> 일요일</p>
+      <a href="https://m.place.naver.com/place/37718010/home?entry=pll" target="_blank" class="location-map" style="display: flex; align-items: center; justify-content: center; background: #f0f0f0; border-radius: 8px; border: 1px solid #e5e7eb;">네이버 지도로 이동 →</a>
+      <p style="font-size: 11px; margin-top: 12px; color: #9ca3af;">클릭하면 네이버 지도에서 더 자세한 정보를 확인할 수 있습니다.</p>
+    </div>
+  </div>
+
   <script>
     const form = document.getElementById('consult-form');
     const statusEl = document.getElementById('status');
