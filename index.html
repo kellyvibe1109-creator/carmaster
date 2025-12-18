@@ -470,7 +470,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.7);
       z-index: 1000;
       align-items: center;
       justify-content: center;
@@ -482,78 +482,43 @@
       background: #fff;
       border-radius: 12px;
       padding: 24px;
-      max-width: 400px;
+      max-width: 680px;
       width: 90%;
       position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
     .business-card-close {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: none;
+      background: rgba(0,0,0,0.1);
       border: none;
-      font-size: 24px;
+      font-size: 28px;
       cursor: pointer;
-      color: #6b7280;
+      color: #374151;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
     }
     .business-card-close:hover {
+      background: rgba(0,0,0,0.2);
       color: #111827;
     }
     .business-card-content h3 {
       margin-bottom: 16px;
       color: #111827;
       font-size: 18px;
+      text-align: center;
     }
-    .business-card-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .business-card-form label {
-      font-size: 13px;
-      font-weight: 500;
-      color: #374151;
-    }
-    .business-card-form input {
-      padding: 10px 12px;
+    .business-card-image {
+      width: 100%;
+      height: auto;
       border-radius: 8px;
-      border: 1px solid #d1d5db;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .business-card-form input:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 1px rgba(37,99,235,0.25);
-    }
-    .business-card-buttons {
-      display: flex;
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .business-card-btn {
-      flex: 1;
-      padding: 10px 16px;
-      border-radius: 6px;
-      border: none;
-      font-size: 14px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: opacity 0.2s ease;
-    }
-    .business-card-btn.send {
-      background: #2563eb;
-      color: #fff;
-    }
-    .business-card-btn.send:hover {
-      opacity: 0.9;
-    }
-    .business-card-btn.cancel {
-      background: #e5e7eb;
-      color: #374151;
-    }
-    .business-card-btn.cancel:hover {
-      opacity: 0.8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .location-modal {
       display: none;
@@ -624,7 +589,8 @@
           <p>르노코리아 김포 대리점 영업 담당</p>
           <div class="manager-actions">
             <a href="tel:010-6648-4949" class="manager-btn primary">📞 010-6648-4949</a>
-            <button class="manager-btn" onclick="sendBusinessCard()">🎫 명함발송</button>
+            <button class="manager-btn" onclick="showBusinessCard()">🎫 명함보기</button>
+            <a href="https://blog.naver.com/renault_man" target="_blank" class="manager-btn">📝 블로그</a>
             <button class="manager-btn" onclick="showLocation()">📍 위치안내</button>
           </div>
         </div>
@@ -817,24 +783,12 @@
     </div>
   </div>
 
-  <!-- 명함발송 모달 -->
+  <!-- 명함보기 모달 -->
   <div id="businessCardModal" class="business-card-modal">
     <div class="business-card-content">
       <button class="business-card-close" onclick="closeBusinessCardModal()">&times;</button>
-      <h3>명함 발송</h3>
-      <div class="business-card-form">
-        <label for="recipientPhoneInput">수신자 휴대폰 번호</label>
-        <input 
-          type="tel" 
-          id="recipientPhoneInput" 
-          placeholder="예: 010-1234-5678" 
-          autocomplete="off"
-        />
-        <div class="business-card-buttons">
-          <button type="button" class="business-card-btn send" onclick="submitBusinessCard()">발송</button>
-          <button type="button" class="business-card-btn cancel" onclick="closeBusinessCardModal()">취소</button>
-        </div>
-      </div>
+      <h3>🎫 조현욱 담당자 명함</h3>
+      <img src="./카마스터 명함.png" alt="조현욱 명함" class="business-card-image" />
     </div>
   </div>
 
@@ -870,6 +824,10 @@
       formData.forEach((value, key) => {
         payload[key] = value;
       });
+      
+      // 개인정보 동의 체크박스 값 명시적으로 설정
+      const policyCheckbox = document.getElementById('policy');
+      payload.policy = policyCheckbox.checked ? '동의' : '미동의';
 
       console.log('📤 전송 데이터:', payload);
 
@@ -911,13 +869,10 @@
       modal.classList.remove('active');
     }
 
-    // 명함발송 함수
-    function sendBusinessCard() {
+    // 명함보기 함수
+    function showBusinessCard() {
       const modal = document.getElementById('businessCardModal');
-      const input = document.getElementById('recipientPhoneInput');
-      input.value = ''; // 입력 필드 초기화
       modal.classList.add('active');
-      input.focus();
     }
 
     function closeBusinessCardModal() {
@@ -925,64 +880,14 @@
       modal.classList.remove('active');
     }
 
-    function submitBusinessCard() {
-      const recipientPhone = document.getElementById('recipientPhoneInput').value.trim();
-
-      if (!recipientPhone) {
-        alert('수신자 휴대폰 번호를 입력해주세요.');
-        document.getElementById('recipientPhoneInput').focus();
-        return;
-      }
-
-      // 휴대폰 번호 형식 검증
-      const phoneRegex = /^01[0-9]-?\d{3,4}-?\d{4}$/;
-      if (!phoneRegex.test(recipientPhone)) {
-        alert('올바른 휴대폰 번호 형식이 아닙니다.\n예: 010-1234-5678');
-        document.getElementById('recipientPhoneInput').focus();
-        return;
-      }
-
-      const senderPhone = '010-6649-4848';
-      
-      // 발송 처리
-      alert(`명함이 발송되었습니다.\n\n발신자: ${senderPhone}\n수신자: ${recipientPhone}\n파일: 카마스터 명함.png`);
-      
-      closeBusinessCardModal();
-
-      // 실제 백엔드 API 호출 예시:
-      /*
-      fetch('/api/send-business-card', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          senderPhone: '010-6649-4848',
-          recipientPhone: recipientPhone,
-          imageFile: '카마스터 명함.png'
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert('명함이 발송되었습니다!');
-          closeBusinessCardModal();
-        } else {
-          alert('발송 중 오류가 발생했습니다.');
-        }
-      })
-      .catch(err => {
-        console.error(err);
         alert('발송 중 오류가 발생했습니다.');
-      });
-      */
-    }
-
-    // 엔터키로 발송 처리
+    // 모달 외부 클릭 시 닫기
     document.addEventListener('DOMContentLoaded', function() {
-      const phoneInput = document.getElementById('recipientPhoneInput');
-      if (phoneInput) {
-        phoneInput.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
-            submitBusinessCard();
+      const modal = document.getElementById('businessCardModal');
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            closeBusinessCardModal();
           }
         });
       }
@@ -1006,51 +911,5 @@
       }
     });
   </script>
-
-  <!-- 상담 신청 완료 모달 -->
-  <div id="submitModal" class="submit-modal">
-    <div class="submit-content">
-      <div class="submit-icon">✅</div>
-      <h2>신청이 완료되었습니다.</h2>
-      <p>소중한 상담 신청을 받았습니다.<br />담당자가 확인 후 빠르게 연락드리겠습니다.</p>
-      <button class="submit-btn" onclick="closeSubmitModal()">닫기</button>
-    </div>
-  </div>
-
-  <!-- 명함발송 모달 -->
-  <div id="businessCardModal" class="business-card-modal">
-    <div class="business-card-content">
-      <button class="business-card-close" onclick="closeBusinessCardModal()">&times;</button>
-      <h3>명함 발송</h3>
-      <div class="business-card-form">
-        <label for="recipientPhoneInput">수신자 휴대폰 번호</label>
-        <input 
-          type="tel" 
-          id="recipientPhoneInput" 
-          placeholder="예: 010-1234-5678" 
-          autocomplete="off"
-        />
-        <div class="business-card-buttons">
-          <button type="button" class="business-card-btn send" onclick="submitBusinessCard()">발송</button>
-          <button type="button" class="business-card-btn cancel" onclick="closeBusinessCardModal()">취소</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 위치안내 모달 -->
-  <div id="locationModal" class="location-modal">
-    <div class="location-content">
-      <button class="location-close" onclick="closeLocation()">&times;</button>
-      <h3>🏣 르노코리아 김포 대리점</h3>
-      <p><strong>주소:</strong> 경기도 김포시 (">
-      <a href="https://m.place.naver.com/place/37718010/home?entry=pll" target="_blank" style="color: #2563eb; text-decoration: underline;">네이버 지도에서 보기</a>
-      <p><strong>전화:</strong> 010-6648-4949</p>
-      <p><strong>운영시간:</strong> 평일 10:00 ~ 19:00 / 토요일 10:00 ~ 18:00</p>
-      <p><strong>휴무:</strong> 일요일</p>
-      <a href="https://m.place.naver.com/place/37718010/home?entry=pll" target="_blank" class="location-map" style="display: flex; align-items: center; justify-content: center; background: #f0f0f0; border-radius: 8px; border: 1px solid #e5e7eb;">네이버 지도로 이동 →</a>
-      <p style="font-size: 11px; margin-top: 12px; color: #9ca3af;">클릭하면 네이버 지도에서 더 자세한 정보를 확인할 수 있습니다.</p>
-    </div>
-  </div>
 </body>
 </html>
